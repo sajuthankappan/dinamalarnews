@@ -37,11 +37,6 @@ function initialize() {
     }*/
     
     $tabs.bind('tabsselect', function(event, ui) {
-        // Objects available in the function context:
-        //ui.tab     // anchor element of the selected (clicked) tab
-        //ui.panel   // element, that contains the selected/clicked tab contents
-        //ui.index   // zero-based index of the selected (clicked) tab
-        //$(ui.panel).html("test");
         lastUsedFeedId = ui.index;
         saveSettings();
         refreshFeed();
@@ -67,13 +62,11 @@ function initialize() {
         feed.load(function(result) {
             if (!result.error) {
                 $("#feed").html("");
-                for (var i = 0; i < result.feed.entries.length; i++) {
-                    var entry = result.feed.entries[i];
-                    //var div = document.createElement("div");
-                    //div.appendChild(document.createTextNode(entry.title));
-                    //alert(entry.content);
-                    $("#feed").append($("<p><div class='newsTitle'><a href=" + entry.link + ">" + entry.title + "</a></div><div>" + entry.content + "</div></p>"));
-                }
+                $.each(result.feed.entries,
+                    function( intIndex, entry ){
+                        $("#feed").append($("<p><div class='newsTitle'><a href=" + entry.link + ">" + entry.title + "</a></div><div>" + entry.content + "</div></p>"));
+                    }
+                );
                 $("iframe").remove();
             }
         });
