@@ -1,12 +1,32 @@
+html,body{
+      margin:0;
+      padding:0;
+      height:100%;
+      border:none
+   }
+
 body {
-    font-size: 75%;
+    font-size:11px;
+}
+
+#mainlogo {
+    text-align:center;
 }
 
 #wrap {
     max-width:800px;
-    margin: 0 auto; 
+    margin:0 auto; 
+}
+
+#feed {
+    height:500px;
+    overflow:scroll;
 }
 
 .newsTitle {
     font-weight:bold;
+}
+
+#settings {
+    text-align:center;
 }
