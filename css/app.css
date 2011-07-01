@@ -11,16 +11,26 @@ body {
 
 #mainlogo {
     text-align:center;
+    height:auto;
+}
+
+#tabs {
+    height:83%;
 }
 
 #wrap {
     max-width:800px;
     margin:0 auto; 
+    height:100%;
 }
 
 #feed {
-    height:500px;
-    overflow:scroll;
+    height:90%;
+    overflow:auto;
+}
+
+.feeditem {
+    min-height:135px;
 }
 
 .newsTitle {
@@ -28,5 +38,10 @@ body {
 }
 
 #settings {
+    text-align:center;
+}
+
+#loading {
+    display:none;
     text-align:center;
 }

@@ -15,9 +15,13 @@ dmFeeds[2][1]="http://rss.dinamalar.com/?cat=pot1";
 dmFeeds[3] = [];
 dmFeeds[3][0]="விளையாட்டு";
 dmFeeds[3][1]="http://rss.dinamalar.com/sportsnews.asp";
+dmFeeds[4] = [];
+dmFeeds[4][0]="சினிமா";
+dmFeeds[4][1]="http://cinema.dinamalar.com/rss.php";
+
 
 function initialize() {
-    var $maxitems = $("#maxitems").slider({ min:5, max: 20, value: 5});
+    var $maxitemsslider = $("#maxitemsslider").slider({ min:5, max: 20, value: 5});
     var lastUsedFeedId = 0;
     var maxItemsToShow = 5;
     
@@ -27,7 +31,7 @@ function initialize() {
     
     $tabs.tabs('select',lastUsedFeedId);
     $("#maxitemstext").text("செய்தி எண்ணிக்கை: " + maxItemsToShow);
-    $("#maxitems").slider( "option", "value", maxItemsToShow );
+    $("#maxitemsslider").slider( "option", "value", maxItemsToShow );
     refreshFeed();
     /*if (lastUsedFeedId > 0) {
         $tabs.tabs('select',lastUsedFeedId);        
@@ -42,8 +46,8 @@ function initialize() {
         refreshFeed();
     });
     
-    $maxitems.bind( "slidechange", function(event, ui) {
-        maxItemsToShow = $( "#maxitems" ).slider( "option", "value" );
+    $maxitemsslider.bind( "slidechange", function(event, ui) {
+        maxItemsToShow = $( "#maxitemsslider" ).slider( "option", "value" );
         $("#maxitemstext").text("செய்தி எண்ணிக்கை: " + maxItemsToShow);
         saveSettings();
         refreshFeed();
@@ -54,17 +58,18 @@ function initialize() {
     }
     
     function loadFeed(feedId) {
-        $("#feed").html("பதிவிறக்கம்...");
-        
+        $("#loading").show();
+        $("#feed").html("");
         var feed = new google.feeds.Feed(dmFeeds[feedId][1]);
         
         feed.setNumEntries(maxItemsToShow);
         feed.load(function(result) {
             if (!result.error) {
+                $("#loading").hide();
                 $("#feed").html("");
                 $.each(result.feed.entries,
                     function( intIndex, entry ){
-                        $("#feed").append($("<p><div class='newsTitle'><a href=" + entry.link + ">" + entry.title + "</a></div><div>" + entry.content + "</div></p>"));
+                        $("#feed").append($("<div class='feeditem'><p><div class='newsTitle'><a href=" + entry.link + ">" + entry.title + "</a></div><div>" + entry.content + "</div></p></div>"));
                     }
                 );
                 $("iframe").remove();
@@ -79,7 +84,8 @@ function initialize() {
                 feedHtml = feedHtml + '<li><a href="#feed">' + objValue[0] + '</a></li>';
             }
         );
-        feedHtml = feedHtml + '</ul><div id="feed"></div>';
+        feedHtml = feedHtml + '</ul>';
+        feedHtml = feedHtml + '<div id="loading"><p><img src="img/loading-circle.gif" /></p></div><div id="feed"></div>';
         $("#tabs").append(feedHtml);
     }
     
