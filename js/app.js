@@ -21,9 +21,9 @@ dmFeeds[4][1]="http://cinema.dinamalar.com/rss.php";
 
 
 function initialize() {
-    var $maxitemsslider = $("#maxitemsslider").slider({ min:5, max: 20, value: 5});
+    var $maxitemsslider = $("#maxitemsslider").slider({ min:5, max: 20, value: 10});
     var lastUsedFeedId = 0;
-    var maxItemsToShow = 5;
+    var maxItemsToShow = 10;
     
     loadSettings();
     loadTabs();
@@ -96,7 +96,7 @@ function initialize() {
         }
         else {
             lastUsedFeedId = 0;
-            maxItemsToShow = 5;
+            maxItemsToShow = 10;
         }
     }
     
