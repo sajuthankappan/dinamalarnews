@@ -12,21 +12,42 @@ body {
 #mainlogo {
     text-align:center;
     height:auto;
+    position:fixed;
+    top:0;
+    margin-left:auto;
+    margin-right:auto;
+    width:100%;
+}
+
+#maincontent {
+    position:absolute;
+    top:70px;
+    bottom:50px;
+    left:0px;
+    right:0px;
+    
 }
 
 #tabs {
-    height:83%;
+    /*position:absolute;*/
+    height:100%;
+    margin-left:auto;
+    margin-right:auto;
+    max-width:800px;
 }
 
 #wrap {
-    max-width:800px;
+    /*max-width:800px;
     margin:0 auto; 
-    height:100%;
+    height:100%;*/
 }
 
 #feed {
-    height:90%;
+    /*height:90%;*/
     overflow:auto;
+    position:absolute;
+    top:38px;
+    bottom:0px;
 }
 
 .feeditem {
@@ -37,9 +58,20 @@ body {
     font-weight:bold;
 }
 
-#settings {
+#settingsdiv {
     text-align:center;
+    height:auto;
+    position:fixed;
+    bottom:10px;    
+    width:100%;
 }
+
+#settings {
+    margin-left:auto;
+    margin-right:auto;
+    width:400px;
+}
+
 
 #loading {
     display:none;
