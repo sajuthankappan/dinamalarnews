@@ -90,7 +90,7 @@ function initialize() {
     }
     
     function loadSettings() {
-        if (localStorage.lastUsedFeedId !== undefined) {
+        if (localStorage.lastUsedFeedId !== undefined && localStorage.lastUsedFeedId !== null) {
             lastUsedFeedId = parseInt(localStorage.lastUsedFeedId,10);
             maxItemsToShow = localStorage.maxItemsToShow;
         }
