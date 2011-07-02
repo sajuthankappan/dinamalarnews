@@ -51,6 +51,10 @@ body {
 }
 
 .feeditem {
+    min-height:100px;
+}
+
+.feeditembig {
     min-height:135px;
 }
 

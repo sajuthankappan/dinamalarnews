@@ -61,15 +61,22 @@ function initialize() {
         $("#loading").show();
         $("#feed").html("");
         var feed = new google.feeds.Feed(dmFeeds[feedId][1]);
+        var feeditemclass = "feeditem";
         
         feed.setNumEntries(maxItemsToShow);
         feed.load(function(result) {
             if (!result.error) {
                 $("#loading").hide();
                 $("#feed").html("");
+                if (lastUsedFeedId == 4) {
+                    feeditemclass = "feeditembig";
+                }
+                else {
+                    feeditemclass = "feeditem";
+                }
                 $.each(result.feed.entries,
                     function( intIndex, entry ){
-                        $("#feed").append($("<div class='feeditem'><p><div class='newsTitle'><a href=" + entry.link + ">" + entry.title + "</a></div><div>" + entry.content + "</div></p></div>"));
+                        $("#feed").append($("<div class='" + feeditemclass + "'><p><div class='newsTitle'><a href=" + entry.link + ">" + entry.title + "</a></div><div>" + entry.content + "</div></p></div>"));
                     }
                 );
                 $("iframe").remove();
