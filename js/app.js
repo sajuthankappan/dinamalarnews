@@ -7,7 +7,7 @@ dmFeeds[0] = [];
 dmFeeds[0][0]="முதல் பக்க செய்திகள்";
 dmFeeds[0][1]="http://feeds.feedburner.com/dinamalar/Front_page_news";
 dmFeeds[1] = [];
-dmFeeds[1][0]="அரசியல் செய்திகள";
+dmFeeds[1][0]="அரசியல் செய்திகள்";
 dmFeeds[1][1]="http://rss.dinamalar.com/?cat=ara1";
 dmFeeds[2] = [];
 dmFeeds[2][0]="பொது செய்தி";
