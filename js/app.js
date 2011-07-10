@@ -33,7 +33,8 @@ function initialize() {
     $tabs.tabs('select',lastUsedFeedId);
     $("#maxitemstext").text("செய்தி எண்ணிக்கை: " + maxItemsToShow);
     $("#maxitemsslider").slider( "option", "value", maxItemsToShow );
-    refreshFeed();
+    //refreshFeed();
+    loadAllFeeds();
     /*if (lastUsedFeedId > 0) {
         $tabs.tabs('select',lastUsedFeedId);        
     }
@@ -44,7 +45,7 @@ function initialize() {
     $tabs.bind('tabsselect', function(event, ui) {
         lastUsedFeedId = ui.index;
         saveSettings();
-        refreshFeed();
+        //refreshFeed();
     });
     
     $maxitemsslider.bind( "slidechange", function(event, ui) {
@@ -52,13 +53,15 @@ function initialize() {
         $("#maxitemstext").text("செய்தி எண்ணிக்கை: " + maxItemsToShow);
         saveSettings();
         clearAllFeeds();
-        refreshFeed();
+        //refreshFeed();
+        loadAllFeeds();
     });
     
     $("#refresh").click(function() {
         discardCachedFeeds();
         clearAllFeeds();
-        refreshFeed();
+        //refreshFeed();
+        loadAllFeeds();
     });
     
     function clearAllFeeds () {
@@ -71,9 +74,18 @@ function initialize() {
         );
     }
     
-    function refreshFeed() {
+    /*function refreshFeed() {
         loadFeed(lastUsedFeedId);
-    }
+        //loadAllFeeds();
+    }*/
+    
+    function loadAllFeeds() {
+        $.each(dmFeeds,
+            function( intIndex, entry ){
+                loadFeed(intIndex);
+            }
+        );
+    }    
     
     function loadFeed(feedId) {
         var feedDiv = "#feed" + feedId;
@@ -92,7 +104,7 @@ function initialize() {
                 if (!result.error) {
                     $("#loading").hide();
                     $(feedDiv).html("");
-                    if (lastUsedFeedId == 4) {
+                    if (feedId == 4) {
                         feeditemclass = "feeditembig";
                     }
                     else {
