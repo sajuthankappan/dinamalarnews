@@ -52,17 +52,19 @@ function initialize() {
         maxItemsToShow = $( "#maxitemsslider" ).slider( "option", "value" );
         $("#maxitemstext").text("செய்தி எண்ணிக்கை: " + maxItemsToShow);
         saveSettings();
-        clearAllFeeds();
-        //refreshFeed();
-        loadAllFeeds();
+        refreshAllFeeds();
     });
     
     $("#refresh").click(function() {
+        refreshAllFeeds();
+    });
+    
+    function refreshAllFeeds () {
         discardCachedFeeds();
         clearAllFeeds();
         //refreshFeed();
         loadAllFeeds();
-    });
+    }
     
     function clearAllFeeds () {
         var feedDiv;
@@ -85,7 +87,7 @@ function initialize() {
                 loadFeed(intIndex);
             }
         );
-    }    
+    }
     
     function loadFeed(feedId) {
         var feedDiv = "#feed" + feedId;
