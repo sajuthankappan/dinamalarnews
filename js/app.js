@@ -26,8 +26,9 @@ function initialize() {
     var maxItemsToShow = 10;
     
     loadSettings();
-    loadTabs();
+    createTabs();
     var $tabs = $( "#tabs" ).tabs();
+    loadFeedsFromCache();
     
     $tabs.tabs('select',lastUsedFeedId);
     $("#maxitemstext").text("செய்தி எண்ணிக்கை: " + maxItemsToShow);
@@ -50,6 +51,12 @@ function initialize() {
         maxItemsToShow = $( "#maxitemsslider" ).slider( "option", "value" );
         $("#maxitemstext").text("செய்தி எண்ணிக்கை: " + maxItemsToShow);
         saveSettings();
+        clearAllFeeds();
+        refreshFeed();
+    });
+    
+    $("#refresh").click(function() {
+        discardCachedFeeds();
         clearAllFeeds();
         refreshFeed();
     });
@@ -97,12 +104,13 @@ function initialize() {
                         }
                     );
                     $("iframe").remove();
+                    cacheFeeds();
                 }
             });
         }
     }
     
-    function loadTabs() {
+    function createTabs() {
         var feedHtml = '<ul>';
         $.each(dmFeeds,
             function( intIndex, objValue ){
@@ -134,6 +142,43 @@ function initialize() {
     function saveSettings() {
         localStorage.maxItemsToShow = maxItemsToShow;
         localStorage.lastUsedFeedId = lastUsedFeedId;
+    }
+    
+    function discardCachedFeeds() {
+        localStorage.lastSavedTime = 0;
+        localStorage.feedContent0 = "";
+        localStorage.feedContent1 = "";
+        localStorage.feedContent2 = "";
+        localStorage.feedContent3 = "";
+        localStorage.feedContent4 = "";
+    }
+    
+    function loadFeedsFromCache() {
+        var dt = new Date();
+        var currTime = dt.getTime();
+        var timeDiff = currTime - localStorage.lastSavedTime;
+        if (localStorage.lastSavedTime > 0 & timeDiff > 120000) {
+            discardCachedFeeds();
+        }
+        else {
+            $("#feed0").html(localStorage.feedContent0);
+            $("#feed1").html(localStorage.feedContent1);
+            $("#feed2").html(localStorage.feedContent2);
+            $("#feed3").html(localStorage.feedContent3);
+            $("#feed4").html(localStorage.feedContent4);
+        }
+    }
+    
+    function cacheFeeds() {
+        if (localStorage.lastSavedTime !== 0) {
+            var dt = new Date();
+            localStorage.lastSavedTime = dt.getTime();
+        }
+        localStorage.feedContent0 = $("#feed0").html();
+        localStorage.feedContent1 = $("#feed1").html();
+        localStorage.feedContent2 = $("#feed2").html();
+        localStorage.feedContent3 = $("#feed3").html();
+        localStorage.feedContent4 = $("#feed4").html();
     }
 }
 
