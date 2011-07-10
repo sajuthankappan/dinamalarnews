@@ -50,49 +50,73 @@ function initialize() {
         maxItemsToShow = $( "#maxitemsslider" ).slider( "option", "value" );
         $("#maxitemstext").text("செய்தி எண்ணிக்கை: " + maxItemsToShow);
         saveSettings();
+        clearAllFeeds();
         refreshFeed();
     });
+    
+    function clearAllFeeds () {
+        var feedDiv;
+        $.each(dmFeeds,
+            function( intIndex, objValue ){
+                feedDiv = "#feed" + intIndex;
+                $(feedDiv).html("");
+            }
+        );
+    }
     
     function refreshFeed() {
         loadFeed(lastUsedFeedId);
     }
     
     function loadFeed(feedId) {
-        $("#loading").show();
-        $("#feed").html("");
-        var feed = new google.feeds.Feed(dmFeeds[feedId][1]);
-        var feeditemclass = "feeditem";
-        
-        feed.setNumEntries(maxItemsToShow);
-        feed.load(function(result) {
-            if (!result.error) {
-                $("#loading").hide();
-                $("#feed").html("");
-                if (lastUsedFeedId == 4) {
-                    feeditemclass = "feeditembig";
-                }
-                else {
-                    feeditemclass = "feeditem";
-                }
-                $.each(result.feed.entries,
-                    function( intIndex, entry ){
-                        $("#feed").append($("<div class='" + feeditemclass + "'><p><div class='newsTitle'><a href=" + entry.link + ">" + entry.title + "</a></div><div>" + entry.content + "</div></p></div>"));
+        var feedDiv = "#feed" + feedId;
+        var temp;
+        temp = $(feedDiv).html();
+        if ($(feedDiv).html() !== "") {
+        }
+        else {
+            $("#loading").show();
+            //$(feedDiv).html("");
+            var feed = new google.feeds.Feed(dmFeeds[feedId][1]);
+            var feeditemclass = "feeditem";
+            
+            feed.setNumEntries(maxItemsToShow);
+            feed.load(function(result) {
+                if (!result.error) {
+                    $("#loading").hide();
+                    $(feedDiv).html("");
+                    if (lastUsedFeedId == 4) {
+                        feeditemclass = "feeditembig";
                     }
-                );
-                $("iframe").remove();
-            }
-        });
+                    else {
+                        feeditemclass = "feeditem";
+                    }
+                    $.each(result.feed.entries,
+                        function( intIndex, entry ){
+                            $(feedDiv).append($("<div class='" + feeditemclass + "'><p><div class='newsTitle'><a href=" + entry.link + ">" + entry.title + "</a></div><div>" + entry.content + "</div></p></div>"));
+                        }
+                    );
+                    $("iframe").remove();
+                }
+            });
+        }
     }
     
     function loadTabs() {
         var feedHtml = '<ul>';
         $.each(dmFeeds,
             function( intIndex, objValue ){
-                feedHtml = feedHtml + '<li><a href="#feed">' + objValue[0] + '</a></li>';
+                feedHtml = feedHtml + '<li><a href="#feed' + intIndex + '">' + objValue[0] + '</a></li>';
             }
         );
         feedHtml = feedHtml + '</ul>';
-        feedHtml = feedHtml + '<div id="loading"><p><img src="img/loading-circle.gif" /></p></div><div id="feed"></div>';
+        feedHtml = feedHtml + '<div id="loading"><p><img src="img/loading-circle.gif" /></p></div>';
+        $.each(dmFeeds,
+            function( intIndex, objValue ){
+                feedHtml = feedHtml + '<div id="feed' + intIndex +'"class="feed"></div>';
+            }
+        );
+        
         $("#tabs").append(feedHtml);
     }
     

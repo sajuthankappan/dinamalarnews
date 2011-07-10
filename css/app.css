@@ -42,7 +42,7 @@ body {
     height:100%;*/
 }
 
-#feed {
+.feed {
     /*height:90%;*/
     overflow:auto;
     position:absolute;
