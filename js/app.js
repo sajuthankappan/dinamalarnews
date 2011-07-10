@@ -157,7 +157,7 @@ function initialize() {
         var dt = new Date();
         var currTime = dt.getTime();
         var timeDiff = currTime - localStorage.lastSavedTime;
-        if (localStorage.lastSavedTime > 0 & timeDiff > 120000) {
+        if (localStorage.lastSavedTime > 0 & timeDiff > 28800000) {
             discardCachedFeeds();
         }
         else {
