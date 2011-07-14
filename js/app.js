@@ -2,7 +2,7 @@ google.load("feeds", "1");
 google.load("jquery", "1.4.2");
 google.load("jqueryui", "1.8.13");
 
-var dmFeeds=[]; // regular array (add an optional integer
+var dmFeeds=[];
 dmFeeds[0] = [];
 dmFeeds[0][0]="முதல் பக்க செய்திகள்";
 dmFeeds[0][1]="http://feeds.feedburner.com/dinamalar/Front_page_news";
@@ -33,19 +33,12 @@ function initialize() {
     $tabs.tabs('select',lastUsedFeedId);
     $("#maxitemstext").text("செய்தி எண்ணிக்கை: " + maxItemsToShow);
     $("#maxitemsslider").slider( "option", "value", maxItemsToShow );
-    //refreshFeed();
+
     loadAllFeeds();
-    /*if (lastUsedFeedId > 0) {
-        $tabs.tabs('select',lastUsedFeedId);        
-    }
-    else {
-        loadFeed(0);
-    }*/
     
     $tabs.bind('tabsselect', function(event, ui) {
         lastUsedFeedId = ui.index;
         saveSettings();
-        //refreshFeed();
     });
     
     $maxitemsslider.bind( "slidechange", function(event, ui) {
@@ -62,7 +55,6 @@ function initialize() {
     function refreshAllFeeds () {
         discardCachedFeeds();
         clearAllFeeds();
-        //refreshFeed();
         loadAllFeeds();
     }
     
@@ -76,11 +68,6 @@ function initialize() {
         );
     }
     
-    /*function refreshFeed() {
-        loadFeed(lastUsedFeedId);
-        //loadAllFeeds();
-    }*/
-    
     function loadAllFeeds() {
         $.each(dmFeeds,
             function( intIndex, entry ){
@@ -91,13 +78,10 @@ function initialize() {
     
     function loadFeed(feedId) {
         var feedDiv = "#feed" + feedId;
-        var temp;
-        temp = $(feedDiv).html();
         if ($(feedDiv).html() !== "") {
         }
         else {
             $("#loading").show();
-            //$(feedDiv).html("");
             var feed = new google.feeds.Feed(dmFeeds[feedId][1]);
             var feeditemclass = "feeditem";
             
@@ -117,7 +101,7 @@ function initialize() {
                             $(feedDiv).append($("<div class='" + feeditemclass + "'><p><div class='newsTitle'><a href=" + entry.link + ">" + entry.title + "</a></div><div>" + entry.content + "</div></p></div>"));
                         }
                     );
-                    $("iframe").remove();
+                    $("iframe").remove(); //to remove the extra iframes added by google feed api 
                     cacheFeeds();
                 }
             });
