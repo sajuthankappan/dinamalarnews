@@ -29,8 +29,14 @@ function initialize() {
     $tabs.tabs('select',lastUsedFeedId);
     $("#maxitemstext").text("செய்தி எண்ணிக்கை: " + maxItemsToShow);
     $("#maxitemsslider").slider( "option", "value", maxItemsToShow );
-
-    loadAllFeeds();
+	
+    if (window.navigator.onLine) {
+		if (needsRefresh()) {
+			loadAllFeeds();
+		}
+	}
+	
+	$("#refresh").show();
     
     $tabs.bind('tabsselect', function(event, ui) {
         lastUsedFeedId = ui.index;
@@ -45,12 +51,25 @@ function initialize() {
     });
     
     $("#refresh").click(function() {
-        refreshAllFeeds();
+		if (window.navigator.onLine) {
+			refreshAllFeeds();
+		}
+		else {
+			$( "#offlinedialog" ).dialog({
+				height: 160,
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		}
     });
     
     function refreshAllFeeds () {
-        discardCachedFeeds();
-        clearAllFeeds();
+        //discardCachedFeeds();
+        //clearAllFeeds();
         loadAllFeeds();
     }
     
@@ -74,9 +93,10 @@ function initialize() {
     
     function loadFeed(feedId) {
         var feedDiv = "#feed" + feedId;
-        if ($(feedDiv).html() !== "") {
+        /*if ($(feedDiv).html() !== "") {
         }
-        else {
+        else {*/
+			$("#refresh").hide();
             $("#loading").show();
             var feed = new google.feeds.Feed(dmFeeds[feedId][1]);
             var feeditemclass = "feeditem";
@@ -85,6 +105,7 @@ function initialize() {
             feed.load(function(result) {
                 if (!result.error) {
                     $("#loading").hide();
+                    $("#refresh").show();
                     $(feedDiv).html("");
                     if (feedId == 4) {
                         feeditemclass = "feeditembig";
@@ -104,7 +125,7 @@ function initialize() {
                     alert('error loading feed');
                 }
             });
-        }
+        //}
     }
     
     function createTabs() {
@@ -115,7 +136,7 @@ function initialize() {
             }
         );
         feedHtml = feedHtml + '</ul>';
-        feedHtml = feedHtml + '<div id="loading"><p><img src="img/loading-circle.gif" /></p></div>';
+        feedHtml = feedHtml + '';
         $.each(dmFeeds,
             function( intIndex, objValue ){
                 feedHtml = feedHtml + '<div id="feed' + intIndex +'"class="feed"></div>';
@@ -150,20 +171,32 @@ function initialize() {
         localStorage.feedContent4 = "";
     }
     
+    function needsRefresh() {
+		var dt = new Date();
+        var currTime = dt.getTime();
+        var timeDiff = currTime - localStorage.lastSavedTime;
+        if (localStorage.lastSavedTime > 0 & timeDiff > 28800000) {
+            return true;
+        }
+        else {
+            return false;
+        }
+	}
+    
     function loadFeedsFromCache() {
-        var dt = new Date();
+        /*var dt = new Date();
         var currTime = dt.getTime();
         var timeDiff = currTime - localStorage.lastSavedTime;
         if (localStorage.lastSavedTime > 0 & timeDiff > 28800000) {
             discardCachedFeeds();
         }
-        else {
+        else {*/
             $("#feed0").html(localStorage.feedContent0);
             $("#feed1").html(localStorage.feedContent1);
             $("#feed2").html(localStorage.feedContent2);
             $("#feed3").html(localStorage.feedContent3);
             $("#feed4").html(localStorage.feedContent4);
-        }
+        //}
     }
     
     function cacheFeeds() {
