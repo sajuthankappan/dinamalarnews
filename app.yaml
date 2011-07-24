@@ -17,5 +17,11 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+- url: /dinamalarnewsapp\.appcache
+  static_files: dinamalarnewsapp.appcache
+  mime_type: text/cache-manifest
+  upload: dinamalarnewsapp\.appcache
+  expiration: "0s"
+
 - url: /.*
   script: dinamalarnewsapp.py

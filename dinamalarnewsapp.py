@@ -11,7 +11,8 @@ class MainPage(webapp.RequestHandler):
 
 application = webapp.WSGIApplication(
 				[('/', MainPage),
-				('/index.html', MainPage)],
+				('/index.html', MainPage),
+				('/offline.html', MainPage)],
 				debug=True)
 
 def main():

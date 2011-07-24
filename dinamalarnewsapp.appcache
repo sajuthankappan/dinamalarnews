@@ -1,0 +1,21 @@
+CACHE MANIFEST
+#07/24/2011 v4
+
+CACHE:
+css/app.css
+css/smoothness/jquery-ui-1.8.9.custom.css 
+css/smoothness/images/ui-bg_flat_75_ffffff_40x100.png
+css/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png 
+css/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png
+css/smoothness/images/ui-bg_glass_65_ffffff_1x400.png
+css/smoothness/images/ui-bg_glass_75_dadada_1x400.png
+js/app.js
+img/dinamalar1.png
+img/reload.png
+img/loading-circle.gif
+
+NETWORK:
+*
+http://*
+https://*
+

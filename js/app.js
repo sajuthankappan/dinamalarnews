@@ -1,7 +1,3 @@
-google.load("feeds", "1");
-google.load("jquery", "1.4.2");
-google.load("jqueryui", "1.8.13");
-
 var dmFeeds=[];
 dmFeeds[0] = [];
 dmFeeds[0][0]="முதல் பக்க செய்திகள்";
@@ -104,6 +100,9 @@ function initialize() {
                     $("iframe").remove(); //to remove the extra iframes added by google feed api 
                     cacheFeeds();
                 }
+                else {
+                    alert('error loading feed');
+                }
             });
         }
     }
@@ -180,4 +179,9 @@ function initialize() {
     }
 }
 
+google.load("feeds", "1");
+google.load("jquery", "1.4.2");
+google.load("jqueryui", "1.8.13");
+
 google.setOnLoadCallback(initialize);
+
