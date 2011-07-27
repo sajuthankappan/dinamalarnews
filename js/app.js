@@ -118,7 +118,7 @@ function initialize() {
                             $(feedDiv).append($("<div class='" + feeditemclass + "'><p><div class='newsTitle'><a href=" + entry.link + ">" + entry.title + "</a></div><div>" + entry.content + "</div></p></div>"));
                         }
                     );
-                    $("iframe").remove(); //to remove the extra iframes added by google feed api 
+                    $("p iframe").remove(); //to remove the extra iframes added by google feed api 
                     cacheFeeds();
                 }
                 else {
@@ -175,7 +175,10 @@ function initialize() {
 		var dt = new Date();
         var currTime = dt.getTime();
         var timeDiff = currTime - localStorage.lastSavedTime;
-        if (localStorage.lastSavedTime > 0 & timeDiff > 28800000) {
+        if (localStorage.lastSavedTime === 'undefined' || localStorage.lastSavedTime === null ) {
+			return true;
+		}
+        else if (localStorage.lastSavedTime > 0 && timeDiff > 28800000) {
             return true;
         }
         else {
