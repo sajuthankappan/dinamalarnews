@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#07/26/2011 v12
+#08/14/2011 v1
 
 CACHE:
 css/app.css
@@ -9,7 +9,7 @@ css/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png
 css/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png
 css/smoothness/images/ui-bg_glass_65_ffffff_1x400.png
 css/smoothness/images/ui-bg_glass_75_dadada_1x400.png
-js/app.js
+js/app.min.js
 img/dinamalar1.png
 img/reload.png
 img/loading-circle.gif
