@@ -107,12 +107,6 @@ function initialize() {
                     $("#loading").hide();
                     $("#refresh").show();
                     $(feedDiv).html("");
-                    if (feedId == 4) {
-                        feeditemclass = "feeditembig";
-                    }
-                    else {
-                        feeditemclass = "feeditem";
-                    }
                     $.each(result.feed.entries,
                         function( intIndex, entry ){
                             $(feedDiv).append($("<div class='" + feeditemclass + "'><p><div class='newsTitle'><a href=" + entry.link + ">" + entry.title + "</a></div><div>" + entry.content + "</div></p></div>"));
@@ -175,7 +169,7 @@ function initialize() {
 		var dt = new Date();
         var currTime = dt.getTime();
         var timeDiff = currTime - localStorage.lastSavedTime;
-        if (localStorage.lastSavedTime === 'undefined' || localStorage.lastSavedTime === null ) {
+        if (localStorage.lastSavedTime === undefined || localStorage.lastSavedTime === null ) {
 			return true;
 		}
         else if (localStorage.lastSavedTime > 0 && timeDiff > 28800000) {
